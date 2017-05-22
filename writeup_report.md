@@ -15,8 +15,8 @@ The goals / steps of this project are the following:
 
 [image1]: ./output_images/chessboard_output.png "Chess Corners"
 [image2]: ./output_images/undistort_output.png "Undistorted"
-[image3a]: ./output_images/test1.jpg "Road Transformed"
-[image3b]: ./output_images/straight_lines2.jpg "Road Transformed"
+[image3a]: ./test_images/test1.jpg "Road Transformed"
+[image3b]: ./test_images/straight_lines2.jpg "Road Transformed"
 [image4]: ./output_images/binary_output.png "Binary Output"
 [image5]: ./output_images/warped_output.png "Warp Example"
 [image6]: ./output_images/color_fit_lines.jpg "Fit Visual"
