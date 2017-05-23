@@ -15,8 +15,8 @@ The goals / steps of this project are the following:
 
 [image1]: ./output_images/chessboard_output.png "Chess Corners"
 [image2]: ./output_images/undistort_output.png "Undistorted"
-[image3a]: ./test_images/test1.jpg "Test Image 1"
-[image3b]: ./test_images/straight_lines2.jpg "Test Image 2"
+[image3a]: ./test_images/test1.jpg "Test Image"
+[image3b]: ./output_images/undistorted/test1.jpg "Undistorted Test Image"
 [image4]: ./output_images/binary_output.png "Binary Output"
 [image5]: ./output_images/warped_output.png "Road Transformed"
 [image6]: ./output_images/fit_lines_output.png "Fit Visual"
@@ -52,10 +52,12 @@ I then used the output `objpoints` and `imgpoints` to compute the camera calibra
 ### Pipeline (single images)
 
 #### 1. Provide an example of a distortion-corrected image.
-To demonstrate this step, I will describe how I apply the distortion correction to two of the test images:
+To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this:
 ![alt text][image3a]
-![alt text][image3b]
 
+Here's the image after distortion correction.
+
+![alt text][image3b]
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 I used a combination of color and gradient thresholds to generate a binary image (function `threshold_image` at the code cell #13 of the IPython notebook).  Here's an example of my output for this step.
