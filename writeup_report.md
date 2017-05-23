@@ -15,12 +15,12 @@ The goals / steps of this project are the following:
 
 [image1]: ./output_images/chessboard_output.png "Chess Corners"
 [image2]: ./output_images/undistort_output.png "Undistorted"
-[image3a]: ./test_images/test1.jpg "Road Transformed"
-[image3b]: ./test_images/straight_lines2.jpg "Road Transformed"
+[image3a]: ./test_images/test1.jpg "Test Image 1"
+[image3b]: ./test_images/straight_lines2.jpg "Test Image 2"
 [image4]: ./output_images/binary_output.png "Binary Output"
-[image5]: ./output_images/warped_output.png "Warp Example"
-[image6]: ./output_images/color_fit_lines.jpg "Fit Visual"
-[image7]: ./output_images/example_output.jpg "Output"
+[image5]: ./output_images/warped_output.png "Road Transformed"
+[image6]: ./output_images/fit_lines_output.png "Fit Visual"
+[image7]: ./output_images/final_output.png "Output"
 [video1]: ./output_videos/project_video.mp4
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
@@ -82,10 +82,10 @@ This resulted in the following source and destination points:
 
 | Source        | Destination   | 
 |:-------------:|:-------------:| 
-| 585, 460      | 320, 0        | 
-| 203, 720      | 320, 720      |
-| 1127, 720     | 960, 720      |
-| 695, 460      | 960, 0        |
+| 253, 697      | 303, 697      | 
+| 585, 456      | 303, 0        |
+| 700, 456      | 1011, 0       |
+| 1061, 690     | 1011, 690     |
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
 
