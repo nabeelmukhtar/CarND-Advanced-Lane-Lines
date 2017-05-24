@@ -1,19 +1,5 @@
-## Advanced Lane Finding
-[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
-
-
-In this project, your goal is to write a software pipeline to identify the lane boundaries in a video, but the main output or product we want you to create is a detailed writeup of the project.  Check out the [writeup template](https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup_template.md) for this project and use it as a starting point for creating your own writeup.  
-
-Creating a great writeup:
----
-A great writeup should include the rubric points as well as your description of how you addressed each point.  You should include a detailed description of the code used in each step (with line-number references and code snippets where necessary), and links to other supporting documents or external references.  You should include images in your writeup to demonstrate how your code works with examples.  
-
-All that said, please be concise!  We're not looking for you to write a book here, just a brief description of how you passed each rubric point, and references to the relevant code :). 
-
-You're not required to use markdown for your writeup.  If you use another method please just submit a pdf of your writeup.
-
-The Project
----
+# Self-Driving Car Engineer Nanodegree
+## Advanced Lane Finding Project
 
 The goals / steps of this project are the following:
 
@@ -26,10 +12,123 @@ The goals / steps of this project are the following:
 * Warp the detected lane boundaries back onto the original image.
 * Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 
-The images for camera calibration are stored in the folder called `camera_cal`.  The images in `test_images` are for testing your pipeline on single frames.  If you want to extract more test images from the videos, you can simply use an image writing method like `cv2.imwrite()`, i.e., you can read the video in frame by frame as usual, and for frames you want to save for later you can write to an image file.  
+[//]: # (Image References)
 
-To help the reviewer examine your work, please save examples of the output from each stage of your pipeline in the folder called `ouput_images`, and include a description in your writeup for the project of what each image shows.    The video called `project_video.mp4` is the video your pipeline should work well on.  
+[image1]: ./output_images/chessboard_output.png "Chess Corners"
+[image2]: ./output_images/undistort_output.png "Undistorted"
+[image3a]: ./test_images/test1.jpg "Test Image"
+[image3b]: ./output_images/undistorted/test1.jpg "Undistorted Test Image"
+[image4]: ./output_images/binary_output.png "Binary Output"
+[image5]: ./output_images/warped_output.png "Road Transformed"
+[image6]: ./output_images/fit_lines_output.png "Fit Visual"
+[image7]: ./output_images/radius_of_curvature.png "Radius of Curvature"
+[image8]: ./output_images/final_output.png "Output"
+[video1]: ./output_videos/project_video.mp4
 
-The `challenge_video.mp4` video is an extra (and optional) challenge for you if you want to test your pipeline under somewhat trickier conditions.  The `harder_challenge.mp4` video is another optional challenge and is brutal!
+## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
+### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
-If you're feeling ambitious (again, totally optional though), don't stop there!  We encourage you to go out and take video of your own, calibrate your camera and show us how you would implement this project from scratch!
+---
+### Writeup / README
+
+#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
+
+You're reading it! 
+### Camera Calibration
+
+#### 1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
+
+The code for this step is contained in the code cell #9 of the IPython notebook.
+
+I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  
+
+Here are chessboard images with corners indentified and drawn.
+
+![alt text][image1]
+
+You can find all test images in this [folder](./output_images/calibrated).
+
+I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function. The code for this step is in the code cell #11 of the IPython notebook in function `undistort_image`. I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
+
+![alt text][image2]
+
+You can find all test images in this [folder](./output_images/undistorted).
+
+### Pipeline (single images)
+
+#### 1. Provide an example of a distortion-corrected image.
+To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this:
+![alt text][image3a]
+
+Here's the image after distortion correction.
+
+![alt text][image3b]
+
+#### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
+I used a combination of color and gradient thresholds to generate a binary image (function `threshold_image` at the code cell #13 of the IPython notebook).  Here's an example of my output for this step.
+
+![alt text][image4]
+
+You can find all test images in this [folder](./output_images/thresholded).
+
+#### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
+
+I chose to hardcode the source and destination points in the following manner:
+
+
+| Source        | Destination   | 
+|:-------------:|:-------------:| 
+| 253, 697      | 303, 697      | 
+| 585, 456      | 303, 0        |
+| 700, 456      | 1011, 0       |
+| 1061, 690     | 1011, 690     |
+
+I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image. The code for this step is in the code cell #15 of the IPython notebook.
+
+![alt text][image5]
+
+You can find all test images in this [folder](./output_images/warped).
+
+#### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
+
+After doing undistortion, color and gradient thresholding and perspecive trannsform, I did a sliding window search for detecting lane lines using the code provided in the lessons. Then I fitted a second order polynomial to it and drew the resulting lines in yellow. The code for this `detect_lanes` function is in the code cell #17 of the IPython notebook.
+Here is an example output.
+
+![alt text][image6]
+
+You can find all test images in this [folder](./output_images/detected_lines).
+
+#### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
+
+I did this in the code cell #19 of the IPython notebook in the function `radius_of_curvature`. I used the same code provided in the lessons. However to calculate the position of vehicle from the center of the road, I took some help from another student: https://github.com/upul/CarND-Advanced-Lane-Lines
+
+![alt text][image7]
+
+You can find all test images in this [folder](./output_images/radius_curvature).
+
+#### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
+
+I did this in the code cell #21 of the IPython notebook in the function `process_image`.  Here is an example of my result on a test image:
+
+![alt text][image8]
+
+You can find all test images in this [folder](./output_images/final_result).
+
+---
+
+### Pipeline (video)
+
+#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
+
+Here's a [link to my video result](./output_videos/project_video.mp4)
+The code for my video processing pipeline is in code cell #23-25 of the IPython Notebook. It uses the Line class provided in the lessons with a buffer of 10 frames. I added the `process_image` function to this class to process video frames.
+
+---
+
+### Discussion
+
+#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+
+The great thing about this project was that most of the code was already provided and explained in the lessons. Most of the code works as it is and the only challenging part is tuning the various parameters.
+The only problem I faced was detecting vehicle position from the center of the road. For this I took help from another student: https://github.com/upul/CarND-Advanced-Lane-Lines.
+My pipeline is a little wobbly in the project video and performs very poorly on challenge videos. I would like to make it more robust using some of the techniques mentioned in the section 'Tips and Tricks for the Project' (also mentioned in first project review). Also I would like to try the sliding window search approach mentioned in the lessons which is to apply a convolution, which will maximize the number of "hot" pixels in each window.
