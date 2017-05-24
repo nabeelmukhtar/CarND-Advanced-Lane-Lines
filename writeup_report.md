@@ -45,9 +45,13 @@ Here are chessboard images with corners indentified and drawn.
 
 ![alt text][image1]
 
+You can find all test images in this [folder](./output_images/calibrated).
+
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function. The code for this step is in the code cell #11 of the IPython notebook in function `undistort_image`. I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
 
 ![alt text][image2]
+
+You can find all test images in this [folder](./output_images/undistorted).
 
 ### Pipeline (single images)
 
@@ -63,6 +67,8 @@ Here's the image after distortion correction.
 I used a combination of color and gradient thresholds to generate a binary image (function `threshold_image` at the code cell #13 of the IPython notebook).  Here's an example of my output for this step.
 
 ![alt text][image4]
+
+You can find all test images in this [folder](./output_images/thresholded).
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
@@ -80,6 +86,8 @@ I verified that my perspective transform was working as expected by drawing the 
 
 ![alt text][image5]
 
+You can find all test images in this [folder](./output_images/warped).
+
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
 After doing undistortion, color and gradient thresholding and perspecive trannsform, I did a sliding window search for detecting lane lines using the code provided in the lessons. Then I fitted a second order polynomial to it and drew the resulting lines in yellow. The code for this `detect_lanes` function is in the code cell #17 of the IPython notebook.
@@ -87,17 +95,23 @@ Here is an example output.
 
 ![alt text][image6]
 
+You can find all test images in this [folder](./output_images/detected_lines).
+
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
 I did this in the code cell #19 of the IPython notebook in the function `radius_of_curvature`. I used the same code provided in the lessons. However to calculate the position of vehicle from the center of the road, I took some help from another student: https://github.com/upul/CarND-Advanced-Lane-Lines
 
 ![alt text][image7]
 
+You can find all test images in this [folder](./output_images/radius_curvature).
+
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
 I did this in the code cell #21 of the IPython notebook in the function `process_image`.  Here is an example of my result on a test image:
 
 ![alt text][image8]
+
+You can find all test images in this [folder](./output_images/final_result).
 
 ---
 
@@ -116,4 +130,4 @@ The code for my video processing pipeline is in code cell #23-25 of the IPython 
 
 The great thing about this project was that most of the code was already provided and explained in the lessons. Most of the code works as it is and the only challenging part is tuning the various parameters.
 The only problem I faced was detecting vehicle position from the center of the road. For this I took help from another student: https://github.com/upul/CarND-Advanced-Lane-Lines.
-My pipeline is a little wobbly at about 20 seconds in the project video and performs very poorly on challenge videos. I would like to make it more robust using some of the techniques mentioned in the section 'Tips and Tricks for the Project'. Also I would like to try the sliding window search approach mentioned in the lessons which is to apply a convolution, which will maximize the number of "hot" pixels in each window.
+My pipeline is a little wobbly in the project video and performs very poorly on challenge videos. I would like to make it more robust using some of the techniques mentioned in the section 'Tips and Tricks for the Project' (also mentioned in first project review). Also I would like to try the sliding window search approach mentioned in the lessons which is to apply a convolution, which will maximize the number of "hot" pixels in each window.
