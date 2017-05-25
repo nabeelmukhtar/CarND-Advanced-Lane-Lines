@@ -1,5 +1,5 @@
 # Self-Driving Car Engineer Nanodegree
-## Advanced Lane Finding Project
+## Project: Advanced Lane Finding
 
 The goals / steps of this project are the following:
 
